@@ -68,5 +68,77 @@ void main() async{
 
   //Exc 4
   print('Exc 4----------');
+  Car normalCar = Car('VinFast VF8');
+  normalCar.drive();
+
+  Car customCar = Car.withModel('Toyota Camry');
+  customCar.drive();
+
+  ElectricCar myEV = ElectricCar('Tesla Model 3', 82);
+  myEV.drive();
+
+  //Exc 5
+  print('Exc 5--------------');
+  String? nullableString;
+  print('Length string: ${nullableString?.length ?? 0}');
+
+  nullableString = 'hello';
+  print('Length string: ${nullableString!.length}');
+
+  print('Use Future.delayed() to simulate loading.');
+  String apiResult = await fetchNetworkData();
+  print('Data received: $apiResult');
+
+  print('Create a simple Stream of integers and listen to values.');
+  Stream<int> numberStream = countStream(3);
+
+  //Chờ giá trị truyền về
+  await for(int val in numberStream){
+    print('Stream value received: $val');
+  }
+}
+
+class Car{
+  //Property
+  String name;
+
+  //Constructor
+  Car(this.name);
   
+  //Named Contructor
+  Car.withModel(this.name){
+    print('--> Named constructor called for: $name');
+  }
+
+  //Method
+  void drive(){
+    print('Car name: $name');
+  }
+}
+
+//Extend class
+class ElectricCar extends Car{
+  int battery;
+
+  ElectricCar(String name, this.battery) : super(name);
+
+  @override
+  void drive(){
+    print('ECar: $name');
+    print('Battery: $battery');
+  }
+}
+
+//Async funtion
+Future<String> fetchNetworkData() async{
+  //Giả lập tải mất 2s
+  await Future.delayed(const Duration(seconds: 2));
+  return "OK";
+}
+
+Stream<int> countStream(int max) async*{
+  for(int i = 1; i < max; i++){
+    await Future.delayed(const Duration(seconds: 1));
+    yield i; //Đưa giá trị vào stream
+  }
 }
