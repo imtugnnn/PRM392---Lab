@@ -142,3 +142,5 @@ Stream<int> countStream(int max) async*{
     yield i; //Đưa giá trị vào stream
   }
 }
+
+//dart run lib/main.dart
